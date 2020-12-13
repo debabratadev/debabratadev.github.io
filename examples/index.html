@@ -17,20 +17,14 @@
 
 		#close_btn {
 			position: absolute;
-			top: 70px;
-			left: 10px;
+			top: 10px;
+			right: 10px;
 			display: none;
 		}
 	</style>
 </head>
 
 <body>
-
-	<div id="info">
-
-		<a href="https://threejs.org" target="_blank" rel="noopener">three.js</a> webgl - instancing - performance
-
-	</div>
 
 	<button id="close_btn">Close</button>
 	<div id="container"></div>
@@ -44,7 +38,466 @@
 
 		import { OrbitControls } from './lib/OrbitControls.js';
 
-		const _0x2011 = ['scale', '<br/>', 'setPixelRatio', 'updateProjectionMatrix', 'byteLength', 'random', 'Cubic', 'join', 'TextureLoader', 'intersectObjects', 'count', 'Vector3', 'sqrt', '<i>GPU\x20draw\x20calls</i>:\x20', 'INSTANCED', 'InOut', 'preventDefault', 'add', 'acos', 'copy', 'clientY', 'gui-stats', '<i>GPU\x20memory</i>:\x20', 'log', 'NAIVE', 'Math', 'toFixed', 'addFolder', 'object', 'MeshPhongMaterial', 'clone', 'appendChild', 'AmbientLight', 'createElement', 'applyMatrix4', 'floor', 'pow', 'rotation', 'name:\x20', 'container', 'start', 'style', 'InstancedMesh', 'array', 'getElementById', 'Matrix4', 'domElement', 'innerHTML', 'Easing', 'step', 'onUpdate', 'innerHeight', 'normalize', 'radToDeg', 'attributes', 'assign', 'sRGBEncoding', 'display', '<i>GPU\x20draw\x20calls</i>:\x201', 'bytes', 'isMesh', 'none', 'enabled', 'Raycaster', 'position', 'hypot', 'onChange', 'Vector2', 'aspect', 'callback', 'lookAt', 'Tween', 'resize', 'method', 'update', 'addEventListener', 'dom', 'SphereBufferGeometry', 'innerWidth', 'compose', 'MERGED', 'material', 'Quaternion', 'dispose', 'classList', 'setMatrixAt', 'Euler', 'render', 'inline-block', 'click', 'remove', 'easing', 'geometry', 'PerspectiveCamera', 'clientHeight', 'atan2', 'setSize', 'length', 'Quadratic', 'onComplete']; (function (_0x1a19d0, _0x43bbeb) { const _0x201142 = function (_0x52c381) { while (--_0x52c381) { _0x1a19d0['push'](_0x1a19d0['shift']()); } }; _0x201142(++_0x43bbeb); }(_0x2011, 0x103)); const _0x52c3 = function (_0x1a19d0, _0x43bbeb) { _0x1a19d0 = _0x1a19d0 - 0x16a; let _0x201142 = _0x2011[_0x1a19d0]; return _0x201142; }; const _0xdedce4 = _0x52c3; let container, stats, gui, guiStatsEl, camera, controls, scene, renderer, material, objects = [], selectedMesh, cameraPosition, closed = !![], radius, phi, theta, lon, lat; const closeBtn = document['getElementById']('close_btn'), Method = { 'INSTANCED': _0xdedce4(0x1a1), 'MERGED': _0xdedce4(0x17f), 'NAIVE': _0xdedce4(0x1ab) }, api = { 'method': Method[_0xdedce4(0x1ab)], 'count': 0x32 }; closeBtn['addEventListener'](_0xdedce4(0x188), function () { const _0x39bd14 = _0xdedce4; new TWEEN['Tween'](camera['position'])['to'](cameraPosition, 0x3e8)['yoyo'](!![])[_0x39bd14(0x1c5)](() => { const _0xc8ffe5 = _0x39bd14; closeBtn[_0xc8ffe5(0x1bc)][_0xc8ffe5(0x1cc)] = _0xc8ffe5(0x16c); })[_0x39bd14(0x18a)](TWEEN[_0x39bd14(0x1c3)][_0x39bd14(0x199)][_0x39bd14(0x1a2)])[_0x39bd14(0x1bb)](), setTimeout(() => { const _0x278fed = _0x39bd14; controls[_0x278fed(0x16d)] = !![], closed = !![]; }, 0x3ea); }); const randomizeMatrix = function () { const _0x244337 = _0xdedce4, _0x133332 = new THREE[(_0x244337(0x19e))](), _0x1468b5 = new THREE['Euler'](), _0x1fd279 = new THREE[(_0x244337(0x181))](), _0x5d0c1e = new THREE[(_0x244337(0x19e))](); return function (_0x3ab935) { const _0x23563f = _0x244337; _0x133332['x'] = Math[_0x23563f(0x198)]() * 0x28 - 0x14, _0x133332['y'] = Math[_0x23563f(0x198)]() * 0x28 - 0x14, _0x133332['z'] = Math[_0x23563f(0x198)]() * 0x28 - 0x14, _0x1468b5['x'] = Math['random']() * 0x2 * Math['PI'], _0x1468b5['y'] = Math[_0x23563f(0x198)]() * 0x2 * Math['PI'], _0x1468b5['z'] = Math[_0x23563f(0x198)]() * 0x2 * Math['PI'], _0x1fd279['setFromEuler'](_0x1468b5), _0x5d0c1e['x'] = _0x5d0c1e['y'] = _0x5d0c1e['z'] = Math[_0x23563f(0x198)]() * 0x1, _0x3ab935[_0x23563f(0x17e)](_0x133332, _0x1fd279, _0x5d0c1e); }; }(); init(), initMesh(), animate(); function clean() { const _0x35ec4b = _0xdedce4, _0x41595e = []; scene['traverse'](function (_0x8076d1) { const _0x5a7fb9 = _0x52c3; if (_0x8076d1[_0x5a7fb9(0x16b)]) _0x41595e['push'](_0x8076d1); }); for (let _0x5d5179 = 0x0; _0x5d5179 < _0x41595e[_0x35ec4b(0x190)]; _0x5d5179++) { const _0x35c904 = _0x41595e[_0x5d5179]; _0x35c904[_0x35ec4b(0x180)][_0x35ec4b(0x182)](), _0x35c904[_0x35ec4b(0x18b)][_0x35ec4b(0x182)](), scene[_0x35ec4b(0x189)](_0x35c904); } } function initMesh() { const _0x29466a = _0xdedce4; clean(); const _0x2cac04 = new THREE[(_0x29466a(0x19b))](), _0xec2cf3 = new THREE[(_0x29466a(0x17c))](0x3, 0x32, 0x32); material = new THREE[(_0x29466a(0x1b0))]({ 'color': 'red' }); switch (api[_0x29466a(0x178)]) { case Method[_0x29466a(0x1a1)]: makeInstanced(_0xec2cf3); break; case Method[_0x29466a(0x17f)]: makeMerged(_0xec2cf3); break; case Method['NAIVE']: makeNaive(_0xec2cf3); break; }return _0xec2cf3; } function makeInstanced(_0x11115a) { const _0x46d6b1 = _0xdedce4, _0x5c67c8 = new THREE[(_0x46d6b1(0x1c0))](), _0x2f90bb = new THREE[(_0x46d6b1(0x1bd))](_0x11115a, material, api[_0x46d6b1(0x19d)]); for (let _0x4e1310 = 0x0; _0x4e1310 < api['count']; _0x4e1310++) { randomizeMatrix(_0x5c67c8), _0x2f90bb[_0x46d6b1(0x184)](_0x4e1310, _0x5c67c8); } scene['add'](_0x2f90bb); const _0x3399bf = getGeometryByteLength(_0x11115a); guiStatsEl[_0x46d6b1(0x1c2)] = ['<i>GPU\x20draw\x20calls</i>:\x201', _0x46d6b1(0x1a9) + formatBytes(api['count'] * 0x10 + _0x3399bf, 0x2)][_0x46d6b1(0x19a)](_0x46d6b1(0x194)); } function makeMerged(_0x32b6ee) { const _0x5e38ce = _0xdedce4, _0xd33e2 = [], _0x7290bd = new THREE['Matrix4'](); for (let _0x1889d8 = 0x0; _0x1889d8 < api[_0x5e38ce(0x19d)]; _0x1889d8++) { randomizeMatrix(_0x7290bd); const _0x3fcf94 = _0x32b6ee[_0x5e38ce(0x1b1)](); _0x3fcf94[_0x5e38ce(0x1b5)](_0x7290bd), _0xd33e2['push'](_0x3fcf94); } guiStatsEl['innerHTML'] = [_0x5e38ce(0x1cd), _0x5e38ce(0x1a9) + formatBytes(getGeometryByteLength(mergedGeometry), 0x2)][_0x5e38ce(0x19a)](_0x5e38ce(0x194)); } function makeNaive(_0x2347e9) { const _0x505312 = _0xdedce4, _0x141798 = new THREE[(_0x505312(0x1c0))](); for (let _0x39e133 = 0x0; _0x39e133 < api[_0x505312(0x19d)]; _0x39e133++) { randomizeMatrix(_0x141798); const _0x157404 = new THREE['Mesh'](_0x2347e9, material); _0x157404[_0x505312(0x1b5)](_0x141798); var _0x2a66a3 = 0.2; _0x157404[_0x505312(0x193)]['x'] = _0x2a66a3, _0x157404[_0x505312(0x193)]['y'] = _0x2a66a3, _0x157404['scale']['z'] = _0x2a66a3, _0x157404[_0x505312(0x174)] = function () { const _0x3b0355 = _0x505312; if (!closed) return; console[_0x3b0355(0x1aa)](_0x3b0355(0x1b9), this['position']), console['log']('Camera:\x20', camera[_0x3b0355(0x16f)]); var _0x933d9c = new THREE[(_0x3b0355(0x19e))](0x0, 0x0, 0x0); const _0xf3262c = 5.7; closed = ![], controls['enabled'] = ![], cameraPosition = { ...camera[_0x3b0355(0x16f)] }, new TWEEN[(_0x3b0355(0x176))](camera[_0x3b0355(0x16f)])['to']({ 'x': this[_0x3b0355(0x16f)]['x'], 'y': this[_0x3b0355(0x16f)]['y'], 'z': this[_0x3b0355(0x16f)]['z'] + 0x2 }, 0x3e8)['yoyo'](!![])[_0x3b0355(0x1c5)](() => { const _0x599fec = _0x3b0355; closeBtn[_0x599fec(0x1bc)][_0x599fec(0x1cc)] = _0x599fec(0x187); })['start'](), setTimeout(() => { }, 0x3ea); }, scene[_0x505312(0x1a4)](_0x157404), objects['push'](_0x157404); } const _0x474fe3 = getGeometryByteLength(_0x2347e9); guiStatsEl['innerHTML'] = [_0x505312(0x1a0) + api[_0x505312(0x19d)], '<i>GPU\x20memory</i>:\x20' + formatBytes(api[_0x505312(0x19d)] * 0x10 + _0x474fe3, 0x2)]['join'](_0x505312(0x194)); } function init() { const _0xd84802 = _0xdedce4, _0x3c8beb = window[_0xd84802(0x17d)], _0x4aab93 = window[_0xd84802(0x1c6)]; camera = new THREE[(_0xd84802(0x18c))](0x2d, _0x3c8beb / _0x4aab93, 0x1, 0x3e8), camera[_0xd84802(0x16f)]['z'] = 0x1e, renderer = new THREE['WebGLRenderer']({ 'antialias': !![] }), renderer[_0xd84802(0x195)](window['devicePixelRatio']), renderer[_0xd84802(0x18f)](_0x3c8beb, _0x4aab93), renderer['outputEncoding'] = THREE[_0xd84802(0x1cb)], container = document[_0xd84802(0x1bf)](_0xd84802(0x1ba)), container['appendChild'](renderer[_0xd84802(0x1c1)]), scene = new THREE['Scene'](), scene['background'] = new THREE['Color'](0xffffff); var _0x3367e0 = new THREE[(_0xd84802(0x1b3))](0xffffff); _0x3367e0['position']['set'](0x0, 0x0, 0x1)[_0xd84802(0x1c7)](), scene[_0xd84802(0x1a4)](_0x3367e0), controls = new OrbitControls(camera, renderer['domElement']), stats = new Stats(), container[_0xd84802(0x1b2)](stats[_0xd84802(0x17b)]), gui = new GUI(), gui[_0xd84802(0x1a4)](api, 'method', Method)[_0xd84802(0x171)](initMesh), gui[_0xd84802(0x1a4)](api, _0xd84802(0x19d), 0x1, 0x2710)[_0xd84802(0x1c4)](0x1)[_0xd84802(0x171)](initMesh); const _0xaa862d = gui[_0xd84802(0x1ae)]('Performance'); guiStatsEl = document[_0xd84802(0x1b4)]('li'), guiStatsEl[_0xd84802(0x183)][_0xd84802(0x1a4)](_0xd84802(0x1a8)), _0xaa862d['__ul'][_0xd84802(0x1b2)](guiStatsEl), _0xaa862d['open'](), window[_0xd84802(0x17a)](_0xd84802(0x177), onWindowResize, ![]), Object[_0xd84802(0x1ca)](window, { 'scene': scene }); } function onWindowResize() { const _0x356b36 = _0xdedce4, _0x36d392 = window[_0x356b36(0x17d)], _0x9fce = window['innerHeight']; camera[_0x356b36(0x173)] = _0x36d392 / _0x9fce, camera[_0x356b36(0x196)](), renderer['setSize'](_0x36d392, _0x9fce); } function animate() { const _0x4e8934 = _0xdedce4; requestAnimationFrame(animate), TWEEN[_0x4e8934(0x179)](), stats['update'](), render(); } function render() { const _0x1ddbcc = _0xdedce4; renderer[_0x1ddbcc(0x186)](scene, camera); } function getGeometryByteLength(_0x4f5d01) { const _0x582307 = _0xdedce4; let _0x2cbe0f = 0x0; if (_0x4f5d01['index']) _0x2cbe0f += _0x4f5d01['index'][_0x582307(0x1be)][_0x582307(0x197)]; for (const _0x1a17ac in _0x4f5d01[_0x582307(0x1c9)]) { _0x2cbe0f += _0x4f5d01['attributes'][_0x1a17ac][_0x582307(0x1be)][_0x582307(0x197)]; } return _0x2cbe0f; } function formatBytes(_0x1af231, _0x28d71b) { const _0x5be27f = _0xdedce4; if (_0x1af231 === 0x0) return '0\x20bytes'; const _0x52abe9 = 0x400, _0x58bed4 = _0x28d71b < 0x0 ? 0x0 : _0x28d71b, _0x4c219d = [_0x5be27f(0x16a), 'KB', 'MB'], _0x35a0ad = Math[_0x5be27f(0x1b6)](Math[_0x5be27f(0x1aa)](_0x1af231) / Math[_0x5be27f(0x1aa)](_0x52abe9)); return parseFloat((_0x1af231 / Math['pow'](_0x52abe9, _0x35a0ad))[_0x5be27f(0x1ad)](_0x58bed4)) + '\x20' + _0x4c219d[_0x35a0ad]; } var raycaster = new THREE[(_0xdedce4(0x16e))](), mouse = new THREE[(_0xdedce4(0x172))](); function onDocumentMouseDown(_0x1a4793) { const _0x16166e = _0xdedce4; _0x1a4793[_0x16166e(0x1a3)](), mouse['x'] = _0x1a4793['clientX'] / renderer[_0x16166e(0x1c1)]['clientWidth'] * 0x2 - 0x1, mouse['y'] = -(_0x1a4793[_0x16166e(0x1a7)] / renderer[_0x16166e(0x1c1)][_0x16166e(0x18d)]) * 0x2 + 0x1, raycaster['setFromCamera'](mouse, camera); var _0x167e97 = raycaster[_0x16166e(0x19c)](objects, !![]); _0x167e97[_0x16166e(0x190)] > 0x0 && _0x167e97[0x0][_0x16166e(0x1af)][_0x16166e(0x174)](); } window[_0xdedce4(0x17a)]('click', onDocumentMouseDown); function cameraToMarker(_0x17cfe4) { const _0x26dd0c = _0xdedce4, _0x2ef68a = { 'x': camera[_0x26dd0c(0x16f)]['x'], 'y': camera[_0x26dd0c(0x16f)]['y'], 'z': camera[_0x26dd0c(0x16f)]['z'] }, _0x5beb0f = new THREE[(_0x26dd0c(0x19e))](_0x17cfe4[_0x26dd0c(0x16f)]['x'], _0x17cfe4[_0x26dd0c(0x16f)]['y'], _0x17cfe4[_0x26dd0c(0x16f)]['z']), _0x162331 = getNewPointOnVector(_0x2ef68a, _0x5beb0f), _0x133dd4 = new THREE[(_0x26dd0c(0x19e))](...Object['values'](_0x162331)), _0x15f66e = new THREE['Euler']()[_0x26dd0c(0x1a6)](camera[_0x26dd0c(0x1b8)]); camera[_0x26dd0c(0x175)](_0x5beb0f); const _0x202c76 = new THREE[(_0x26dd0c(0x185))]()['copy'](camera[_0x26dd0c(0x1b8)]); camera['rotation']['copy'](_0x15f66e), new TWEEN[(_0x26dd0c(0x176))](camera[_0x26dd0c(0x1b8)])['to']({ 'x': _0x202c76['x'], 'y': _0x202c76['y'], 'z': _0x202c76['z'] }, 0x1f4)[_0x26dd0c(0x18a)](TWEEN[_0x26dd0c(0x1c3)]['Quadratic'][_0x26dd0c(0x1a2)])[_0x26dd0c(0x192)](() => { const _0x279288 = _0x26dd0c; new TWEEN[(_0x279288(0x176))](camera['position'])['to']({ 'x': camera[_0x279288(0x16f)]['x'], 'y': camera[_0x279288(0x16f)]['y'], 'z': camera[_0x279288(0x16f)]['z'] })[_0x279288(0x18a)](TWEEN[_0x279288(0x1c3)][_0x279288(0x191)][_0x279288(0x1a2)])[_0x279288(0x1c5)](() => { const _0x4a8df4 = _0x279288; camera[_0x4a8df4(0x175)](_0x5beb0f); })['onComplete'](() => { const _0x218801 = _0x279288; camera[_0x218801(0x175)](_0x5beb0f), radius = Math[_0x218801(0x170)](...Object['values'](_0x133dd4)), phi = Math[_0x218801(0x1a5)](_0x133dd4['y'] / radius), theta = Math[_0x218801(0x18e)](_0x133dd4['z'], _0x133dd4['x']), lon = THREE[_0x218801(0x1ac)][_0x218801(0x1c8)](theta), lat = 0x5a - THREE[_0x218801(0x1ac)]['radToDeg'](phi); })[_0x279288(0x1bb)](); })[_0x26dd0c(0x1bb)](); } function getNewPointOnVector(_0x20d83a, _0x1bb45e) { const _0x41ff5f = _0xdedce4; let _0x4f475a = 0xc8, _0x3b66a0 = { 'x': _0x1bb45e['x'] - _0x20d83a['x'], 'y': _0x1bb45e['y'] - _0x20d83a['y'], 'z': _0x1bb45e['z'] - _0x20d83a['z'] }, _0x1399cd = Math[_0x41ff5f(0x19f)](Math[_0x41ff5f(0x1b7)](_0x3b66a0['x'], 0x2) + Math[_0x41ff5f(0x1b7)](_0x3b66a0['y'], 0x2) + Math[_0x41ff5f(0x1b7)](_0x3b66a0['z'], 0x2)), _0xd11268 = { 'x': _0x3b66a0['x'] / _0x1399cd, 'y': _0x3b66a0['y'] / _0x1399cd, 'z': _0x3b66a0['z'] / _0x1399cd }, _0x40b49c = { 'x': _0x4f475a * _0xd11268['x'], 'y': _0x4f475a * _0xd11268['y'], 'z': _0x4f475a * _0xd11268['z'] }; return { 'x': _0x1bb45e['x'] + _0x40b49c['x'], 'y': _0x1bb45e['y'] + _0x40b49c['y'], 'z': _0x1bb45e['z'] + _0x40b49c['z'] }; }
+		let container, stats, gui, guiStatsEl;
+		let camera, controls, scene, renderer, material, objects = [], selectedMesh, cameraPosition, closed = true;
+		let radius, phi, theta, lon, lat;
+
+		const closeBtn = document.getElementById('close_btn');
+
+		// gui
+
+		const Method = {
+			INSTANCED: 'INSTANCED',
+			MERGED: 'MERGED',
+			NAIVE: 'NAIVE'
+		};
+
+		const api = {
+			method: Method.NAIVE,
+			count: 50
+		};
+
+		closeBtn.addEventListener('click', function () {
+			new TWEEN.Tween(camera.position)
+				.to(cameraPosition, 1000)
+				.yoyo(true)
+				.onUpdate(() => {
+					closeBtn.style.display = 'none';
+				})
+				.easing(TWEEN.Easing.Cubic.InOut)
+				.start();
+
+			setTimeout(() => {
+				controls.enabled = true;
+				closed = true;
+			}, 1002);
+		})
+
+
+		const randomizeMatrix = function () {
+
+			const position = new THREE.Vector3();
+			const rotation = new THREE.Euler();
+			const quaternion = new THREE.Quaternion();
+			const scale = new THREE.Vector3();
+
+			return function (matrix) {
+
+				position.x = Math.random() * 40 - 20;
+				position.y = Math.random() * 40 - 20;
+				position.z = Math.random() * 40 - 20;
+
+				rotation.x = Math.random() * 2 * Math.PI;
+				rotation.y = Math.random() * 2 * Math.PI;
+				rotation.z = Math.random() * 2 * Math.PI;
+
+				quaternion.setFromEuler(rotation);
+
+				scale.x = scale.y = scale.z = Math.random() * 1;
+
+				matrix.compose(position, quaternion, scale);
+
+			};
+
+		}();
+
+		//
+
+		init();
+		initMesh();
+		animate();
+
+		//
+
+		function clean() {
+
+			const meshes = [];
+
+			scene.traverse(function (object) {
+
+				if (object.isMesh) meshes.push(object);
+
+			});
+
+			for (let i = 0; i < meshes.length; i++) {
+
+				const mesh = meshes[i];
+				mesh.material.dispose();
+				mesh.geometry.dispose();
+
+				scene.remove(mesh);
+
+			}
+
+		}
+
+		function initMesh() {
+
+			clean();
+
+			const loader = new THREE.TextureLoader();
+			const geometry = new THREE.SphereBufferGeometry(3, 50, 50);
+			material = new THREE.MeshPhongMaterial({
+				color: 'red',    // red (can also use a CSS color string here)
+				// flatShading: true
+			});
+			// const material = new THREE.MeshBasicMaterial({ color: '#8AC' });
+
+			switch (api.method) {
+
+				case Method.INSTANCED:
+					makeInstanced(geometry);
+					break;
+
+				case Method.MERGED:
+					makeMerged(geometry);
+					break;
+
+				case Method.NAIVE:
+					makeNaive(geometry);
+					break;
+
+			}
+			return geometry;
+
+		}
+
+		function makeInstanced(geometry) {
+			const matrix = new THREE.Matrix4();
+
+			const mesh = new THREE.InstancedMesh(geometry, material, api.count);
+
+			for (let i = 0; i < api.count; i++) {
+
+				randomizeMatrix(matrix);
+				mesh.setMatrixAt(i, matrix);
+
+			}
+
+			scene.add(mesh);
+
+			//
+
+			const geometryByteLength = getGeometryByteLength(geometry);
+
+			// guiStatsEl.innerHTML = [
+
+			// 	'<i>GPU draw calls</i>: 1',
+			// 	'<i>GPU memory</i>: ' + formatBytes(api.count * 16 + geometryByteLength, 2)
+
+			// ].join('<br/>');
+
+		}
+
+		function makeMerged(geometry) {
+
+			const geometries = [];
+			const matrix = new THREE.Matrix4();
+
+			for (let i = 0; i < api.count; i++) {
+
+				randomizeMatrix(matrix);
+
+				const instanceGeometry = geometry.clone();
+				instanceGeometry.applyMatrix4(matrix);
+
+				geometries.push(instanceGeometry);
+
+			}
+
+			// const mergedGeometry = BufferGeometryUtils.mergeBufferGeometries(geometries);
+
+			// scene.add(new THREE.Mesh(mergedGeometry, material));
+
+			//
+
+			// guiStatsEl.innerHTML = [
+
+			// 	'<i>GPU draw calls</i>: 1',
+			// 	'<i>GPU memory</i>: ' + formatBytes(getGeometryByteLength(mergedGeometry), 2)
+
+			// ].join('<br/>');
+
+		}
+
+		function makeNaive(geometry) {
+
+			const matrix = new THREE.Matrix4();
+
+			for (let i = 0; i < api.count; i++) {
+
+				randomizeMatrix(matrix);
+
+				const mesh = new THREE.Mesh(geometry, material);
+				mesh.applyMatrix4(matrix);
+				var scale = 0.2;
+				mesh.scale.x = scale;
+				mesh.scale.y = scale;
+				mesh.scale.z = scale;
+				mesh.callback = function () {
+					if (!closed) {
+						return;
+					}
+					console.log('name: ', this.position);
+					console.log('Camera: ', camera.position);
+
+					var targetPosition = new THREE.Vector3(0, 0, 0);
+
+					const scaleSize = 5.7;
+					// new TWEEN.Tween(this.scale)
+					// 	.to({ x: scaleSize, y: scaleSize, z: scaleSize }, 1000)
+					// 	.yoyo(true)
+					// 	.easing(TWEEN.Easing.Cubic.InOut)
+					// 	.start();
+
+					closed = false;
+					controls.enabled = false;
+					cameraPosition = { ...camera.position };
+					new TWEEN.Tween(camera.position)
+						.to({ x: this.position.x, y: this.position.y, z: this.position.z + 2 }, 1000)
+						.yoyo(true)
+						.onUpdate(() => {
+							closeBtn.style.display = 'inline-block';
+						})
+						// .easing(TWEEN.Easing.Cubic.InOut)
+						.start();
+
+					setTimeout(() => {
+
+						// controls.enableRotate = true;
+						// controls.update();
+
+					}, 1002);
+					// camera.position.sub(this.position).setLength(100).add(this.position);
+
+					// camera.position.x = this.position.x + 0;
+					// camera.position.y = this.position.y + 0;
+					// camera.position.z = this.position.z + 30;
+					// camera.lookAt(this.position);
+
+					// camera.Translate(0, 0, -30); // where `r` is the desired distance
+
+					// cameraToMarker(this);
+				}
+
+				scene.add(mesh);
+				objects.push(mesh);
+			}
+
+			//
+
+			const geometryByteLength = getGeometryByteLength(geometry);
+
+			// guiStatsEl.innerHTML = [
+
+			// 	'<i>GPU draw calls</i>: ' + api.count,
+			// 	'<i>GPU memory</i>: ' + formatBytes(api.count * 16 + geometryByteLength, 2)
+
+			// ].join('<br/>');
+
+		}
+
+		function init() {
+
+			const width = window.innerWidth;
+			const height = window.innerHeight;
+
+			// camera
+
+			camera = new THREE.PerspectiveCamera(45, width / height, 1, 1000);
+			camera.position.z = 30;
+
+			// renderer
+
+			renderer = new THREE.WebGLRenderer({ antialias: true });
+			renderer.setPixelRatio(window.devicePixelRatio);
+			renderer.setSize(width, height);
+			renderer.outputEncoding = THREE.sRGBEncoding;
+
+			container = document.getElementById('container');
+			container.appendChild(renderer.domElement);
+
+			// scene
+
+			scene = new THREE.Scene();
+			scene.background = new THREE.Color(0xffffff);
+
+
+
+			var light = new THREE.DirectionalLight(0xffffff);
+			light.position.set(0, 0, 1).normalize();
+			scene.add(light);
+
+			// controls
+
+			controls = new OrbitControls(camera, renderer.domElement);
+			// controls.autoRotate = true;
+			// controls.enableRotate = false;
+
+			// stats
+
+			stats = new Stats();
+			container.appendChild(stats.dom);
+
+			// gui
+
+			// gui = new GUI();
+			// gui.add(api, 'method', Method).onChange(initMesh);
+			// gui.add(api, 'count', 1, 10000).step(1).onChange(initMesh);
+
+			// const perfFolder = gui.addFolder('Performance');
+
+			// guiStatsEl = document.createElement('li');
+			// guiStatsEl.classList.add('gui-stats');
+
+			// perfFolder.__ul.appendChild(guiStatsEl);
+			// perfFolder.open();
+
+			// listeners
+
+			window.addEventListener('resize', onWindowResize, false);
+
+			Object.assign(window, { scene });
+
+		}
+
+		//
+
+		function onWindowResize() {
+
+			const width = window.innerWidth;
+			const height = window.innerHeight;
+
+			camera.aspect = width / height;
+			camera.updateProjectionMatrix();
+
+			renderer.setSize(width, height);
+
+		}
+
+		function animate() {
+
+			requestAnimationFrame(animate);
+			TWEEN.update();
+			// controls.update();
+			stats.update();
+
+			render();
+
+		}
+
+		function render() {
+
+			renderer.render(scene, camera);
+
+		}
+
+		//
+
+		function getGeometryByteLength(geometry) {
+
+			let total = 0;
+
+			if (geometry.index) total += geometry.index.array.byteLength;
+
+			for (const name in geometry.attributes) {
+
+				total += geometry.attributes[name].array.byteLength;
+
+			}
+
+			return total;
+
+		}
+
+		// Source: https://stackoverflow.com/a/18650828/1314762
+		function formatBytes(bytes, decimals) {
+
+			if (bytes === 0) return '0 bytes';
+
+			const k = 1024;
+			const dm = decimals < 0 ? 0 : decimals;
+			const sizes = ['bytes', 'KB', 'MB'];
+
+			const i = Math.floor(Math.log(bytes) / Math.log(k));
+
+			return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];
+
+		}
+
+		var raycaster = new THREE.Raycaster();
+		var mouse = new THREE.Vector2();
+
+		function onDocumentMouseDown(event) {
+
+			event.preventDefault();
+
+			mouse.x = (event.clientX / renderer.domElement.clientWidth) * 2 - 1;
+			mouse.y = - (event.clientY / renderer.domElement.clientHeight) * 2 + 1;
+
+			raycaster.setFromCamera(mouse, camera);
+
+			var intersects = raycaster.intersectObjects(objects, true);
+
+			if (intersects.length > 0) {
+
+				intersects[0].object.callback();
+
+			}
+
+		}
+
+		window.addEventListener('click', onDocumentMouseDown);
+
+		function cameraToMarker(marker) {
+			const currentCamPosition = { x: camera.position.x, y: camera.position.y, z: camera.position.z };
+			const storedMarkerPosition = new THREE.Vector3(marker.position.x, marker.position.y, marker.position.z);
+			const newCameraTarget = getNewPointOnVector(currentCamPosition, storedMarkerPosition);
+			const markerPosition = new THREE.Vector3(...Object.values(newCameraTarget));
+			const startRotation = new THREE.Euler().copy(camera.rotation);
+			camera.lookAt(storedMarkerPosition);
+			const endRotation = new THREE.Euler().copy(camera.rotation);
+			camera.rotation.copy(startRotation);
+			new TWEEN.Tween(camera.rotation)
+				.to(
+					{
+						x: endRotation.x,
+						y: endRotation.y,
+						z: endRotation.z,
+					}, 500)
+				.easing(TWEEN.Easing.Quadratic.InOut)
+				.onComplete(() => {
+					new TWEEN.Tween(camera.position)
+						.to({
+							x: camera.position.x,
+							y: camera.position.y,
+							z: camera.position.z,
+						})
+						.easing(TWEEN.Easing.Quadratic.InOut)
+						.onUpdate(() => {
+							camera.lookAt(storedMarkerPosition);
+						})
+						.onComplete(() => {
+							camera.lookAt(storedMarkerPosition);
+							radius = Math.hypot(...Object.values(markerPosition));
+							phi = Math.acos(markerPosition.y / radius);
+							theta = Math.atan2(markerPosition.z, markerPosition.x);
+							lon = THREE.Math.radToDeg(theta);
+							lat = 90 - THREE.Math.radToDeg(phi);
+						})
+						.start();
+				})
+				.start();
+		}
+
+		function getNewPointOnVector(p1, p2) {
+			let distAway = 200;
+			let vector = { x: p2.x - p1.x, y: p2.y - p1.y, z: p2.z - p1.z };
+			let vl = Math.sqrt(Math.pow(vector.x, 2) + Math.pow(vector.y, 2) + Math.pow(vector.z, 2));
+			let vectorLength = { x: vector.x / vl, y: vector.y / vl, z: vector.z / vl };
+			let v = { x: distAway * vectorLength.x, y: distAway * vectorLength.y, z: distAway * vectorLength.z };
+			return { x: p2.x + v.x, y: p2.y + v.y, z: p2.z + v.z };
+		}
 
 	</script>
 </body>
