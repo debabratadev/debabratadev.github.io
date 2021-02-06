@@ -180,7 +180,7 @@ var mainModule = (function () {
             toolModule.select();
 
         } else {
-            gkhead.src = '../images/Atlanta.jpg';
+            gkhead.src = '../images/Eden.jpg';
             bgHelper.setChartReference(gkhead.src);
             // listModule.pushToCategory({ 'name': 'good', 'color': '#00FF00', id: 0 });
         }
@@ -373,7 +373,7 @@ var mainModule = (function () {
                 sectionSelection = true;
                 document.getElementById('section-div').style.display = "none";
 
-                helperModule.showAndHideExitBtn("block","none");
+                helperModule.showAndHideExitBtn("block", "none");
 
                 if (sectionComponent.length) {
                     helperModule.displayBlock(seatBtnArray, 'block');
@@ -1503,7 +1503,7 @@ var mainModule = (function () {
         fontSize = fontSize / factor;
         scale = scale / factor;
 
-        navModule.setNav(factor,getCurrentFactor());
+        navModule.setNav(factor, getCurrentFactor());
     }
 
     /**
@@ -2177,8 +2177,8 @@ var mainModule = (function () {
      * TODO - remove seat component update from here
      */
     function selectSeat() {
-        
-        if(seatCategory && seatCategory.tempSeat.length ){
+
+        if (seatCategory && seatCategory.tempSeat.length) {
             return;
         }
         currentSeat = null;
@@ -2464,8 +2464,8 @@ var mainModule = (function () {
             helperModule.displayBlock(seatBtnArray, 'none');
             document.getElementById('section-div').style.display = "block";
 
-            helperModule.showAndHideExitBtn("none","block");
-       
+            helperModule.showAndHideExitBtn("none", "block");
+
             toolModule.select();
 
             if (currentObject) {
@@ -2527,7 +2527,7 @@ var mainModule = (function () {
             'row-spacing': rowSpacing,
             'font-size': fontSize,
             'media-scale': scale,
-            'current-factor':getCurrentFactor()
+            'current-factor': getCurrentFactor()
         }
     }
 
@@ -2536,10 +2536,10 @@ var mainModule = (function () {
      * 
      * @param {*} type is the type fof the configuration
      */
-    function setComponentConfig(type, value,selection = null) {
+    function setComponentConfig(type, value, selection = null) {
 
         let fac = getCurrentFactor();
-        value /=fac;
+        value /= fac;
 
         switch (type) {
             case 'seat-radius': radius = value;
@@ -2554,7 +2554,7 @@ var mainModule = (function () {
                 break;
         }
 
-        if(selection){
+        if (selection) {
             selectConfigType(selection);
         }
     }
@@ -2565,12 +2565,12 @@ var mainModule = (function () {
      * 
      * @param {*} type 
      */
-    function selectConfigType(type){
+    function selectConfigType(type) {
         removeLastComponent(type);
-        switch(type){
+        switch (type) {
             case 'row': addSeatRows();
                 break;
-            case 'matrix':addMatrixOfRows();
+            case 'matrix': addMatrixOfRows();
                 break;
         }
     }

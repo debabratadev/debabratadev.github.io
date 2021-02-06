@@ -9,7 +9,7 @@ var chartListModule = (function () {
 
     let del = false;
     let chartList = [];
-    let chartCounter=0;
+    let chartCounter = 0;
 
     /**
      * Initialise the list module
@@ -24,7 +24,7 @@ var chartListModule = (function () {
      */
     function fetchListOfChart() {
 
-        const url = urlModule.header + urlModule.chartBaseURL+"user/"+userId;
+        const url = urlModule.header + urlModule.chartBaseURL + "user/" + userId;
 
         const getMethod = {
             method: 'GET',
@@ -64,8 +64,8 @@ var chartListModule = (function () {
                 chartName = chartData[8]['chart']['name'];
             }
 
-            if(!src){
-                src="http://localhost/Chart/ui/images/Atlanta.jpg";
+            if (!src) {
+                src = "http://localhost/Chart/ui/images/Eden.jpg";
                 // src=null;
             }
 
@@ -76,8 +76,8 @@ var chartListModule = (function () {
 
         //Show no chart if no chart is availbel
 
-        if(!length){
-            document.getElementById('no-card').style.display="block";
+        if (!length) {
+            document.getElementById('no-card').style.display = "block";
         }
 
         chartCounter = length;
@@ -93,15 +93,15 @@ var chartListModule = (function () {
         value = value.trim();
 
         listHandlingModule.clearList();
-        
+
         for (let index = 0; index < chartList.length; ++index) {
 
             let id = chartList[index]['id'];
             let src = chartList[index]['src'];
             let chartName = chartList[index]['name'];
 
-            if(helperModule.regularExpressionSearch(value,chartName)){
-                listHandlingModule.createList(id,src,chartName);
+            if (helperModule.regularExpressionSearch(value, chartName)) {
+                listHandlingModule.createList(id, src, chartName);
             }
         }
     }
@@ -111,7 +111,7 @@ var chartListModule = (function () {
      */
     function createNewChart() {
 
-        const url = urlModule.header + urlModule.chartBaseURL+urlModule.createChart;
+        const url = urlModule.header + urlModule.chartBaseURL + urlModule.createChart;
 
         let data = {
             'user_id': userId,
@@ -195,8 +195,8 @@ var chartListModule = (function () {
      */
     function deleteChartFromList(chartId) {
 
-        const url = urlModule.header + urlModule.chartBaseURL+chartId;
-        
+        const url = urlModule.header + urlModule.chartBaseURL + chartId;
+
         const deleteMethod = {
             method: 'DELETE', // Method itself
             headers: {
@@ -209,7 +209,7 @@ var chartListModule = (function () {
             .then(response => response.json())
             .then(data => {
                 --chartCounter;
-                if(!chartCounter){
+                if (!chartCounter) {
                     document.getElementById('no-card').style.display = "block";
                 }
             }) // Manipulate the data retrieved back, if we want to do something with it

@@ -9,7 +9,7 @@ var bgHelper = (function () {
      * @param {*} id   is the document id here
      * @param {*} img  is the image 
      */
-    function aspectRatio(id, img){
+    function aspectRatio(id, img) {
 
         let divWidth = id.clientWidth;
         let divHeight = id.clientHeight;
@@ -18,40 +18,40 @@ var bgHelper = (function () {
         let bgHeight = img.height;
 
 
-        let hratio = divWidth/bgWidth;
-        let vratio = divHeight/bgHeight;
+        let hratio = divWidth / bgWidth;
+        let vratio = divHeight / bgHeight;
 
-        let ratio = Math.min(hratio,vratio);
+        let ratio = Math.min(hratio, vratio);
 
         return {
-            width: img.width*ratio,
-            height:img.height*ratio
+            width: img.width * ratio,
+            height: img.height * ratio
         }
     }
 
     /**
      * Sets the Reference Chart here
      */
-    function setChartReference(url){
+    function setChartReference(url) {
         let chartImage = document.getElementById('chart-image-div');
-        // chartImage.style.backgroundImage = "url(../images/Atlanta.jpg)";  
-        chartImage.style.backgroundImage = "url("+url+")";  
+        // chartImage.style.backgroundImage = "url(../images/Eden.jpg)";  
+        chartImage.style.backgroundImage = "url(" + url + ")";
         chartImage.style.backgroundSize = "100% 100%";
     }
 
     /**
      * Set the chart to new address
      */
-    function setChartAddress(url){
+    function setChartAddress(url) {
         let chartImage = document.getElementById('chart-image-div');
-        chartImage.style.backgroundImage = "url("+url+")"; 
+        chartImage.style.backgroundImage = "url(" + url + ")";
         chartImage.style.backgroundSize = "100% 100%";
 
     }
 
     return {
         aspectRatio: aspectRatio,
-        setChartReference:setChartReference,
-        setChartAddress:setChartAddress,
+        setChartReference: setChartReference,
+        setChartAddress: setChartAddress,
     }
-  })();
+})();
