@@ -1,0 +1,228 @@
+.x-body {
+    font-family: arial,verdana,tahoma,sans-serif !important;
+}
+.x-window-body-default {
+    font-family: arial,verdana,tahoma,sans-serif !important;
+}
+
+/*Tooltip z-index issue*/
+.x-tip {
+  z-index:82000 !important;
+}
+
+.x-color-picker {
+    z-index: 22100 !important;
+}
+
+.x-message-box {
+    z-index: 22100 !important;
+}
+
+.annotation-win {
+    z-index: 21000 !important;
+}
+
+.annotation-drag {
+    z-index: 21050 !important;
+}
+
+.selected-annotation {
+    z-index: 21001 !important;
+}
+
+.navigator-win {
+    z-index: 22000 !important;
+}
+
+.left-tab-panel {
+    z-index: 22000 !important;
+}
+
+.ham-top-toolbar {
+    z-index: 22000 !important;
+}
+
+.ham-bottom-toolbar {
+    z-index: 22000 !important;
+}
+
+.ham-divider {
+    z-index: 21999 !important;
+}
+
+.canvas-element {
+    display: block;
+    width: 100%;
+}
+
+body {
+    overflow-x: hidden;
+    overflow-y: hidden;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.ham-tool-icon-btn {
+    width: 24px !important;
+    height: 24px;
+}
+
+.thumbnail-slider {
+    margin: 0px auto 2px;
+}
+
+.left-tab-panel .x-tab-bar .x-box-inner{
+    top: 52px;
+}
+
+/*Move the resizer to the tab panel*/
+.left-tab-panel .x-resizable-handle-east {
+    height: 100%;
+    right: 17px;
+    top: 0px;
+    width: 6px;
+}
+
+.thumbnail {
+    display: block;
+    padding: 4px;
+    line-height: 1.42857143;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    cursor: pointer;
+    margin: 5px 0;
+    -webkit-transition: all .2s ease-in-out;
+    -o-transition: all .2s ease-in-out;
+    transition: all .2s ease-in-out;
+}
+
+.thumbnail:hover {
+    border-color: #428bca;
+}
+
+.thumbnail .x-autocontainer-outerCt {
+    height: 100%;
+}
+
+.thumbnail .x-autocontainer-innerCt {
+    text-align: center;
+    vertical-align: middle;
+}
+
+.thumbnail img {
+    vertical-align: middle;
+}
+
+.progress-text {
+    padding-left: 6px;
+    font-size: 12px;
+}
+
+.densitometer-color-name {
+    vertical-align: top;
+    margin-right: 5px
+}
+
+.densitometer-color-code {
+    width: 15px;
+    height: 15px;
+    margin-right: 5px;
+    display: inline-block;
+}
+
+.annot-user-role {
+    font-size: 11px;
+    font-weight: bold;
+}
+
+.annot-user-name {
+    font-size: 11px;
+    font-style: italic;
+    margin-left: 1px;
+}
+
+.user-name-box {
+    top: 3px !important;
+}
+
+.annotation-win {
+    padding: 1px 2px 2px !important;
+    border-radius: 3px;
+}
+
+.annotation-win .x-window-header-default-top {
+    padding: 2px 2px 1px;
+}
+
+.annotation-win .x-window-body {
+    top: 18px !important;
+}
+
+.comment-container {
+    padding: 2px 2px 2px 2px;
+}
+
+.comment-container .x-btn-default-small {
+    background-color: transparent !important;
+    background-image: none !important;
+    border-color: transparent;
+}
+
+.comment-container .x-btn-default-small:hover {
+    border-color: #9d9d9d;
+}
+
+.annot-delete {
+    padding: 0 !important;
+    float: right;
+}
+
+.annot-comment-box, .annotation-win textarea {
+    font-size: 11px !important;
+    -webkit-user-select: text;
+    -khtml-user-select: text;
+    -moz-user-select: text;
+    -ms-user-select: text;
+    user-select: text;
+}
+
+.img-selected {
+    border-color: #0000FF;
+}
+
+.densitometer-box {
+    top: 3px !important;
+}
+
+.alt-preview {
+    width: 140px;
+    height: 140px;
+    padding: 30px;
+    display: block; //For firefox
+}
+
+.ham-loading-mask {
+    z-index: 22100 !important;
+}
+
+.document-drawer {
+    overflow-x: hidden !important;
+}
+
+canvas#nav-canvas {
+    position: absolute;
+    right: 50px;
+    bottom: 50px;
+    z-index: 5000;
+}
+
+button#zoom-btn {
+    position: absolute;
+    top: 5px;
+    left: 5px;
+}
