@@ -1,0 +1,44 @@
+<html>
+
+<head>
+    <link rel="stylesheet" type="text/css" href="../styles/modal.css">
+    <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous"> -->
+</head>
+
+<button class="image-trigger">Click here to trigger the modal!</button>
+
+<div class="image-modal">
+    <div class="image-modal-content">
+        <span class="close-button">&times;</span>
+        <div class="media-header">
+            <div id="media-type"> Chart Media </div>
+            <div class="search-bar">
+                <i class="fas fa-search"></i>
+                <input type="text" id="image-search" class="border-none" class="header-input" placeholder="Search">
+            </div>
+        </div>
+        <br>
+        <div class="flex-container" id="img-thumbnail">
+
+        </div>
+        <br>
+        <div class="flex-container">
+
+            <div class="upload-btn-wrapper">
+                <button id="upload-btn">Upload a file</button>
+                <input type="file" name="myfile" />
+            </div>
+
+            <div class="img-pagination" id="img-pagination">
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="../javascript/utilities/modal/thumbnail/thumbnail.js"></script>
+<script src="../javascript/utilities/modal/thumbnail/pagination.js"></script>
+<script src="../javascript/utilities/helper/expression.js"></script>
+<script src="../javascript/utilities/modal/modal.js"></script>
+
+</html>

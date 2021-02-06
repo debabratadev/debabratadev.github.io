@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+    
+    <head>
+        <link rel="stylesheet" type="text/css" href="../styles/login.css">
+    </head>
+
+    <body>
+        <div class="container">
+            <section class="login">
+                <div class="box-login">
+                    <div class="box-login-content is--login">
+                        <div id="login-box" class="box-forms form--login">
+                            <div>
+                                <div class="box-forms--title">LOGIN</div>
+                                <form id="form-login" method="post" autocomplete="off" name="login-form-name">
+                                    <div class="form-group">
+                                        <input type="email" id="user-email" name="email" placeholder="dev@happsnow.com" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>
+                                            <input id="remember" type="checkbox">
+                                            <span class="white-color">Remember me</span>
+                                        </label>
+                                    </div>
+                                    <div class="form-group clearfix">
+                                        <input class="white-color" type="submit" name="login" id="login-btn" value="Log In"
+                                            style="font-size:18px; " />
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </body>
+    
+    <!--URL-->
+    <script src="../javascript/utilities/request/url.js"></script>
+
+    <!--Handler-->
+    <script src="../javascript/modules/login/handler/hlogin.js "></script>
+
+    <!--Login-->
+    <script src="../javascript/modules/login/login.js"></script>
+</html>

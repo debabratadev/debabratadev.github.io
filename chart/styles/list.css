@@ -1,0 +1,103 @@
+.header {
+  width: 100%;
+  height: 12vh;
+  margin: 0px;
+  position: fixed;
+  background-color: #4267b2;
+  color: #dde1e3;
+  z-index: 1;
+  padding: 0 1% 0% 1%;
+}
+
+.header-row {
+  margin-top: 0.5%;
+}
+
+.header-btn {
+  border: none;
+}
+
+body {
+  background-color: white;
+  font-size: 13px;
+  overflow-x: hidden;
+}
+
+.card {
+  -webkit-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+          box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  -webkit-transition: 0.3s;
+  transition: 0.3s;
+  width: 45%;
+  height: 25vh;
+  margin: 1% 0 0 12%;
+}
+
+.card:hover {
+  -webkit-box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+          box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+}
+
+.container {
+  padding: 2px 16px;
+}
+
+.chart-list {
+  padding-top: 7%;
+  overflow-y: auto;
+}
+
+.right {
+  float: right;
+}
+
+#user-email {
+  background-color: #4267b2;
+  outline: none;
+  border: none;
+  color: #dde1e3;
+}
+
+#chart-search {
+  width: 40vh;
+  padding-left: 4%;
+}
+
+.chart-new {
+  padding: 1px;
+}
+
+.border-none {
+  border: none;
+}
+
+.header-btn {
+  color: white;
+  background-color: #4267b2;
+}
+
+.fas.fa-trash-alt.delete-icon {
+  color: #ff0000;
+}
+
+#no-card {
+  width: 100%;
+  height: auto;
+  left: 30%;
+  top: 40%;
+  position: absolute;
+  display: none;
+}
+
+.no-card-text {
+  position: absolute;
+  border: 1px solid #4267b2;
+  width: 500px;
+  height: 60px;
+  text-align: center;
+}
+
+#user-email {
+  cursor: pointer;
+}
+/*# sourceMappingURL=list.css.map */

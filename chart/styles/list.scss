@@ -1,0 +1,131 @@
+// ================================================
+// VAR
+// ================================================
+
+//height
+$height-card :25vh;
+$size:5vh;
+$font-size:13px;
+//Color 
+// $color-header: #000000;
+$color-header:#4267b2;
+// $color-background:#dde1e3;
+$color-background:white;
+// $color-background:rgb(241, 21, 21);
+$color-text:#dde1e3;
+$delete-icon-color:#ff0000;
+
+// ================================================
+// Styles
+// ================================================
+
+.header {
+  width: 100%;
+  height: 12vh;
+  margin:0px;
+  position: fixed;
+  background-color: $color-header;
+  color: $color-text;
+  z-index: 1;
+  padding:0 1% 0% 1%;
+}
+
+.header-row{
+  margin-top: 0.5%;
+}
+
+.header-btn{
+  border: none;
+  // border-radius: 10%;
+}
+
+body{
+  background-color: $color-background;
+  font-size: $font-size;
+  overflow-x: hidden;
+}
+.card {
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    transition: 0.3s;
+    width: 45%;
+    height: $height-card;
+    margin: 1% 0 0 12%;
+    // background:url('../images/Atlanta.jpg');
+    // background-size: 100% 100%;
+  }
+  
+  .card:hover {
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+  }
+  
+  .container {
+    padding: 2px 16px;
+  }
+
+  .chart-list{
+    padding-top: 7%;
+    overflow-y:auto;
+  }
+
+  .right{
+    float: right;
+  }
+
+  #user-email{
+    background-color: $color-header;
+    outline: none;
+    border: none;
+    color: $color-text;
+  }
+
+  #chart-search{
+    width: $size*8;
+    padding-left: 4%;
+  }
+
+  .chart-new{
+    padding: 1px;
+  }
+
+  .border-none{
+    border: none;
+  }
+
+  .search-bar{
+    // padding-left: 10%;
+  }
+
+  .header-btn{
+    color: white;
+    background-color: $color-header;
+  }
+
+  .fas.fa-trash-alt.delete-icon{
+    color:$delete-icon-color,
+  }
+
+  // .no-card {
+  //   top:250px;
+  // }
+
+  #no-card{
+    width: 100%;
+    height: auto;
+    left: 30%;
+    top: 40%;
+    position: absolute;
+    display: none;
+    // overflow-x: hidden;
+  }
+
+  .no-card-text{
+    position: absolute;
+    border: 1px solid $color-header;
+    width: 500px;
+    height: 60px;
+    text-align: center;
+  }
+
+  #user-email{
+    cursor: pointer;
+  }

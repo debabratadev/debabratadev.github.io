@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Chart List</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="../styles/list.css">
+    <!--URL-->
+    <script src="../javascript/utilities/request/url.js"></script>
+    <script src="../javascript/modules/chart/handler/hsession.js"></script>
+    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+</head>
+
+<body id="body">
+    <div class="header">
+        <div class="row header-row">
+            <div class="col-md-2 " class="company-logo">
+                Charting Application
+            </div>
+            <!-- <div class="col-md-8">
+                <div class="row">
+                    <div class="col-md-4">
+
+                    </div>
+                    <div class="col-md-4">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <button class="header-btn">
+                                    Seating Charts
+                                </button>
+                            </div>
+                            <div class="col-md-6">
+                                <button class="header-btn">
+                                    <i class="fas fa-cog fa-2x"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+
+                    </div>
+                </div>
+            </div> -->
+            <div class="col-md-8">
+
+            </div>
+            <div class="col-md-2">
+                <span class="right" id="log-out-btn">
+                    <input type="email" value="dev@happsnow.com" id="user-email" readonly>
+                    <i class="fas fa-sign-out-alt"></i>
+                </span>
+            </div>
+        </div>
+        <div class="header-row">
+            <div class="row">
+
+                <div class="col-md-3">
+                    <div class="row">
+                        <div class="col-md-5">
+                            <div class="chart-new">
+                                <button class="header-btn" id="chart-new">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <i class="fas fa-plus-square"></i>    New Chart
+                                        </div>
+                                    </div>
+                                </button>
+                            </div>
+                        </div>
+                        <!-- <div class="col-md-7">
+                            <div class="chart-archive">
+                                <button class="header-btn">
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <i class="fas fa-archive"></i>
+                                        </div>
+                                        <div class="col-md-9">
+                                            View Archive
+                                        </div>
+                                    </div>
+                                </button>
+                            </div>
+                        </div> -->
+                    </div>
+                </div>
+                <div class="col-md-3">
+
+                </div>
+
+                <div class="col-md-6">
+                    <span class="right">
+                        <div class="search-bar">
+                            <!-- <i class="fas fa-search"></i> -->
+                            <input type="text" id="chart-search" class="border-none" class="header-input" placeholder="Search Chart">
+                            <!-- <button><i class="fas fa-search"></i></button> -->
+                        </div>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <ul class="chart-list" id="chart-list">
+    </ul>
+
+    <div id="no-card">
+        <div class="no-card-text">
+            <br>
+            No Chart Available, Create One To Start
+        </div>
+    </div>
+</body>
+
+<script src="../javascript/modules/chart-list/handler/handler.js"></script>
+<script src="../javascript/modules/chart-list/list.js"></script>
+<script src="../javascript/modules/chart-list/handle-list/handle-list.js"></script>
+<script src="../javascript/utilities/helper/helper.js"></script>
+
+<!-- Helper -->
+<!-- <script src="../javascript/utilities/helper/expression.js"></script> -->
+
+</html>
