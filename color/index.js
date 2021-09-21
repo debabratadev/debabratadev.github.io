@@ -95,13 +95,15 @@ function createColorGame(levelConfig, enableSound) {
       init: function() {
         //Update counter every second
         intervalId = setInterval(() => {
+          $('.counter').html(interCounter--)
+
           //Reset counter when it reaches 0.
           if (interCounter == 0) {
             clearInterval(intervalId);
             gameover(level);
             return;
           }
-          $('.counter').html(interCounter--)
+          
         }, 1000);
   
         $('#score').html(level);
