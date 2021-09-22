@@ -184,7 +184,7 @@ function createColorGame(levelConfig, enableSound) {
       var $scoreContainer = $("<div>")
         .css({
           position: "absolute",
-          top: "0",
+          top: "13.5px",
           left: "0",
         })
         .appendTo($header);
@@ -195,13 +195,17 @@ function createColorGame(levelConfig, enableSound) {
       $timer = $("<span>")
         .css({
           padding: "6px 12px",
-          borderRadius: "10px",
+          borderRadius: "6px",
           fontSize: "20px",
           fontWeight: 700,
           backgroundColor: "#fd9090",
           color: "#ffcaca",
-          height: "40px",
+          height: "45px",
           width: "60px",
+          boxSizing: "border-box",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
         })
         .appendTo($header);
 
@@ -306,13 +310,15 @@ function createColorGame(levelConfig, enableSound) {
         }
       }
 
-      var x = window.matchMedia("(min-width: 620px)");
-      runMediaQuery(x); // Call listener function at run time
-      x.addListener(runMediaQuery); // Attach listener function on state changes
+      var mql = window.matchMedia("(min-width: 620px)");
+      runMediaQuery(mql); // Call listener function at run time
+
+      mql.addEventListener("change", runMediaQuery); // Attach listener function on state changes
     },
     init: function () {
       colorGame.setUpHtml();
       $score.html(level);
+      $timer.html(timer);
       colorGame.nextLevel(level);
     },
   };
