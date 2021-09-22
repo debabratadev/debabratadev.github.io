@@ -318,3 +318,7 @@ $(function () {
   };
   createColorGame(gameConfigObj, true);
 });
+
+function gameover(level) {
+  alert(level);
+}
