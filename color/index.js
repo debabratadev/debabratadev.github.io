@@ -14,7 +14,8 @@ function createColorGame(levelConfig, enableSound) {
     inCorrectSound = new Audio(incorrect_audio),
     intervalId,
     gamePaused = false,
-    timer = 60;
+    timer = 60,
+    timerStarted = false;
 
   var colorGame = {
     nextLevel: function (level) {
@@ -99,6 +100,11 @@ function createColorGame(levelConfig, enableSound) {
       return $span;
     },
     calculateResult: function () {
+      //Start time if not already started.
+      if (!timerStarted) {
+        colorGame.startTimer();
+      }
+
       //If current item has same position as randomly created position then it is correct.
       if ($(this).data("id") == correctPosition) {
         $box.empty();
@@ -120,7 +126,8 @@ function createColorGame(levelConfig, enableSound) {
       $pauseContent.css({ display: "none" });
       gamePaused = false;
     },
-    setCounter() {
+    startTimer() {
+      timerStarted = true;
       //Update timer every second.
       intervalId = setInterval(() => {
         //Return when game is paused.
@@ -155,6 +162,7 @@ function createColorGame(levelConfig, enableSound) {
         })
         .appendTo(document.body);
 
+      //Main Content.
       $content = $("<div>")
         .css({
           maxWidth: "100%",
@@ -243,6 +251,7 @@ function createColorGame(levelConfig, enableSound) {
         })
         .appendTo($boxContainer);
 
+      //Content to show when game is paused.
       $pauseContent = $("<div>")
         .css({
           display: "none",
@@ -303,7 +312,6 @@ function createColorGame(levelConfig, enableSound) {
     },
     init: function () {
       colorGame.setUpHtml();
-      colorGame.setCounter();
       $score.html(level);
       colorGame.nextLevel(level);
     },
