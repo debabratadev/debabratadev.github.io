@@ -158,7 +158,8 @@ function createColorGame(levelConfig, enableSound) {
           padding: "0 9px",
           backgroundColor: "#f06060",
           color: "#fff",
-          height: "100vh",
+          height: "100%",
+          minHeight: "100vh",
         })
         .appendTo(document.body);
 
