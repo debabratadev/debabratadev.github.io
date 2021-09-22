@@ -123,14 +123,15 @@ function createColorGame(levelConfig, enableSound) {
           $(".counter").toggleClass('danger');
         }
 
+        $(".counter").html(counter);
+
         //Reset counter when it reaches 0.
         if (counter == 0) {
           clearInterval(intervalId);
           gameover(level);
           return;
         }
-
-        $(".counter").html(counter--);
+        counter--
         
       }, 1000);
     },
