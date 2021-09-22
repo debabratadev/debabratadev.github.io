@@ -131,7 +131,7 @@ function createColorGame(levelConfig, enableSound) {
           gameover(level);
           return;
         }
-        counter--
+        counter--;
         
       }, 1000);
     },
