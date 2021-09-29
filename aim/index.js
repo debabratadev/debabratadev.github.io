@@ -57,7 +57,7 @@ function createShootingGame(gameConfig, enableSound) {
     this.hitTest = function (mouse) {
       ctx.beginPath();
       ctx.arc(this.x, this.y, this.radius, 0, 2 * Math.PI);
-      if (ctx.isPointInPath(mouse.x * 2, mouse.y * 2)) {
+      if (ctx.isPointInPath(mouse.x * ratio, mouse.y * ratio)) {
         ctx.closePath();
         return true;
       } else {
@@ -224,7 +224,7 @@ function createShootingGame(gameConfig, enableSound) {
           canvas.height = 600 * ratio;
           $canvas.css({ height: "600px", width: "600px" });
         }
-        ctx.scale(2, 2);
+        ctx.scale(ratio, ratio);
       }
 
       $(window).on("resize", function () {
