@@ -220,9 +220,9 @@ function createShootingGame(gameConfig, enableSound) {
           });
         } else {
           $gameContainer.css({ padding: 0 });
-          canvas.width = 600 * ratio;
-          canvas.height = 600 * ratio;
-          $canvas.css({ height: "600px", width: "600px" });
+          canvas.width = 420 * ratio;
+          canvas.height = 420 * ratio;
+          $canvas.css({ height: "420px", width: "420px" });
         }
         ctx.scale(ratio, ratio);
       }
