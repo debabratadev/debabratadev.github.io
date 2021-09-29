@@ -7,9 +7,12 @@ function createShootingGame(gameConfig, enableSound) {
   var canvas,
     ctx,
     $title,
+    $score,
     aims = [], // Targets for a level
+    dots = [], //Black dots
     score = 0,
     level = 0,
+    fadeOutSpeed = 0.005,
     ratio = window.devicePixelRatio, // Pixel ratio of the screen
     normalSpeed = 1, // Normal speed for moving targets
     fastSpeed = 3, // Fast speed for moving targets
@@ -17,6 +20,27 @@ function createShootingGame(gameConfig, enableSound) {
     inCorrectSound = new Audio(incorrect_audio),
     rotateTargets = false, //Flag to rotate targets
     inCircle = false; //Flag to draw in circle
+
+  function Dot() {
+    this.x = 0;
+    this.y = 0;
+    this.radius = 5;
+    this.alpha = 1;
+    this.fadeOut = false;
+    this.draw = function () {
+      if (this.fadeOut) {
+        ctx.globalAlpha = this.alpha;
+      }
+      var prevFill = ctx.fillStyle;
+      ctx.beginPath();
+      ctx.fillStyle = "#000";
+      ctx.arc(this.x, this.y, this.radius, 0, 2 * Math.PI);
+      ctx.fill();
+      ctx.closePath();
+      ctx.fillStyle = prevFill;
+      ctx.globalAlpha = 1;
+    };
+  }
 
   function Aim() {
     this.x = 0;
@@ -29,8 +53,20 @@ function createShootingGame(gameConfig, enableSound) {
     this.sin = Math.sin(this.radian);
     this.cos = Math.cos(this.radian);
     this.hit = false;
+    this.alpha = 1;
+    this.fadeOut = false;
+    this.dot = null;
 
     this.draw = function () {
+      if (this.fadeOut) {
+        this.alpha -= fadeOutSpeed;
+        if (this.alpha <= 0) {
+          this.alpha = 0;
+        }
+        //Set associated dot alpha as well
+        this.dot.alpha = this.alpha;
+        ctx.globalAlpha = this.alpha;
+      }
       //Draw outer Red.
       var prevFill = ctx.fillStyle;
       ctx.beginPath();
@@ -51,10 +87,16 @@ function createShootingGame(gameConfig, enableSound) {
       ctx.fill();
       ctx.closePath();
       ctx.fillStyle = prevFill;
+      ctx.globalAlpha = 1;
     };
 
     //Check if Mouse hit the target
     this.hitTest = function (mouse) {
+      //If already hit.
+      if (this.hit) {
+        return false;
+      }
+
       ctx.beginPath();
       ctx.arc(this.x, this.y, this.radius, 0, 2 * Math.PI);
       if (ctx.isPointInPath(mouse.x * ratio, mouse.y * ratio)) {
@@ -64,11 +106,14 @@ function createShootingGame(gameConfig, enableSound) {
         return false;
       }
     };
-    this.contact = function (mouse) {
+    this.contact = function (mouse, dot) {
       //If already hit then return.
       if (this.hit) {
         return;
       }
+
+      this.fadeOut = true;
+      this.dot = dot; //Associate dot/hole
 
       var da = mouse.x - this.x;
       var db = mouse.y - this.y;
@@ -84,7 +129,7 @@ function createShootingGame(gameConfig, enableSound) {
         score += 1;
       }
 
-      console.log(score);
+      $score.html("Score: " + score);
       this.hit = true;
       shootingGame.checkResult();
     };
@@ -108,6 +153,9 @@ function createShootingGame(gameConfig, enableSound) {
           this.speed = Math.abs(this.speed);
         }
         this.x += this.speed;
+        if (this.dot) {
+          this.dot.x += this.speed;
+        }
       } else if (this.animationDirection == "vertical") {
         //Reached Bottom
         if (this.y + this.radius >= canvasHeight) {
@@ -118,6 +166,9 @@ function createShootingGame(gameConfig, enableSound) {
           this.speed = Math.abs(this.speed);
         }
         this.y += this.speed;
+        if (this.dot) {
+          this.dot.y += this.speed;
+        }
       }
     };
 
@@ -189,6 +240,14 @@ function createShootingGame(gameConfig, enableSound) {
         })
         .appendTo(document.body);
 
+      $score = $("<div>")
+        .css({
+          textAlign: "center",
+          paddingBottom: "10px",
+        })
+        .html("Score: 0")
+        .appendTo($gameContainer);
+
       var $canvas = $("<canvas>")
         .css({
           height: "100%",
@@ -209,7 +268,7 @@ function createShootingGame(gameConfig, enableSound) {
 
       function updateCanvasWidth() {
         var windowWidth = $(window).width();
-        if (windowWidth <= 620) {
+        if (windowWidth <= 440) {
           $gameContainer.css({ padding: "0 9px" });
           var canvasWidth = windowWidth - 18;
           canvas.width = canvasWidth * ratio;
@@ -409,6 +468,7 @@ function createShootingGame(gameConfig, enableSound) {
         return;
       }
       aims = [];
+      dots = [];
       rotateTargets = false;
       inCircle = false;
       shootingGame[gameConfig.levels[level].name]();
@@ -427,6 +487,8 @@ function createShootingGame(gameConfig, enableSound) {
           offsetLeft += canvasClone.offsetLeft;
           offsetTop += canvasClone.offsetTop;
         } while ((canvasClone = canvasClone.offsetParent));
+        offsetLeft += 2;
+        offsetTop -= 4;
       }
 
       updateOffset();
@@ -438,11 +500,18 @@ function createShootingGame(gameConfig, enableSound) {
       }
 
       function onMouseDown() {
+        //Add Black dot
+        var dot = new Dot();
+        dot.x = mouse.x;
+        dot.y = mouse.y;
+        dots.push(dot);
+
         var hitTarget = false;
         for (var i = 0; i < aims.length; i++) {
           if (aims[i].hitTest(mouse)) {
-            aims[i].contact(mouse);
             hitTarget = true;
+            aims[i].contact(mouse, dot);
+            dot.fadeOut = true;
           }
         }
 
@@ -453,17 +522,20 @@ function createShootingGame(gameConfig, enableSound) {
         }
       }
 
+      //For Mouse enabled device
       canvas.addEventListener("mousedown", function (e) {
         updateMouseXY(e);
         onMouseDown();
       });
 
+      //For Mobile.
       canvas.addEventListener("touchstart", function (e) {
         e.preventDefault();
         updateMouseXY(e.touches[0]);
         onMouseDown();
       });
 
+      //On screen width change
       $(window).on("resize", function () {
         canvasClone = canvas;
         offsetLeft = 0;
@@ -490,13 +562,21 @@ function createShootingGame(gameConfig, enableSound) {
   (function drawFrame() {
     window.requestAnimationFrame(drawFrame, canvas);
     ctx.clearRect(0, 0, canvas.width, canvas.height); //Clear canvas
+
+    //Set position of all targets when drawn in circle.
     drawInCircle();
+
     aims.forEach(function (aim) {
       aim.move();
       aim.rotate();
     });
+    //Draw targets.
     aims.forEach(function (aim) {
       aim.draw();
+    });
+    //Draw dots/holes.
+    dots.forEach(function (dot) {
+      dot.draw();
     });
   })();
 }
