@@ -7,7 +7,12 @@ function createShootingGame(gameConfig, enableSound) {
   var canvas,
     ctx,
     $title,
+    $header,
     $score,
+    $timer,
+    timer = 60,
+    firstHit = true,
+    intervalId,
     aims = [], // Targets for a level
     dots = [], //Black dots
     score = 0,
@@ -55,17 +60,19 @@ function createShootingGame(gameConfig, enableSound) {
     this.hit = false;
     this.alpha = 1;
     this.fadeOut = false;
-    this.dot = null;
+    this.dots = [];
 
     this.draw = function () {
       if (this.fadeOut) {
         this.alpha -= fadeOutSpeed;
         if (this.alpha <= 0) {
           this.alpha = 0;
+          shootingGame.checkResult();
         }
-        //Set associated dot alpha as well
-        this.dot.alpha = this.alpha;
         ctx.globalAlpha = this.alpha;
+        this.dots.forEach((dot) => {
+          dot.alpha = this.alpha;
+        });
       }
       //Draw outer Red.
       var prevFill = ctx.fillStyle;
@@ -92,8 +99,8 @@ function createShootingGame(gameConfig, enableSound) {
 
     //Check if Mouse hit the target
     this.hitTest = function (mouse) {
-      //If already hit.
-      if (this.hit) {
+      //If disappeared.
+      if (this.alpha == 0) {
         return false;
       }
 
@@ -107,13 +114,14 @@ function createShootingGame(gameConfig, enableSound) {
       }
     };
     this.contact = function (mouse, dot) {
+      this.dots.push(dot); //Associate dot/hole
+
       //If already hit then return.
       if (this.hit) {
         return;
       }
 
       this.fadeOut = true;
-      this.dot = dot; //Associate dot/hole
 
       var da = mouse.x - this.x;
       var db = mouse.y - this.y;
@@ -131,7 +139,6 @@ function createShootingGame(gameConfig, enableSound) {
 
       $score.html("Score: " + score);
       this.hit = true;
-      shootingGame.checkResult();
     };
 
     //It animates in horizontal or vertical direction.
@@ -153,9 +160,9 @@ function createShootingGame(gameConfig, enableSound) {
           this.speed = Math.abs(this.speed);
         }
         this.x += this.speed;
-        if (this.dot) {
-          this.dot.x += this.speed;
-        }
+        this.dots.forEach((dot) => {
+          dot.x += this.speed;
+        });
       } else if (this.animationDirection == "vertical") {
         //Reached Bottom
         if (this.y + this.radius >= canvasHeight) {
@@ -166,9 +173,9 @@ function createShootingGame(gameConfig, enableSound) {
           this.speed = Math.abs(this.speed);
         }
         this.y += this.speed;
-        if (this.dot) {
-          this.dot.y += this.speed;
-        }
+        this.dots.forEach((dot) => {
+          dot.y += this.speed;
+        });
       }
     };
 
@@ -184,11 +191,20 @@ function createShootingGame(gameConfig, enableSound) {
         cy = canvas.height / ratio / 2;
 
       var x = this.x - cx,
-        y = cy - this.y;
+        y = cy - this.y,
+        oldX = this.x,
+        oldY = this.y;
+
       var x1 = x * this.cos - y * this.sin;
       var y1 = y * this.cos + x * this.sin;
       this.x = cx + x1;
       this.y = cy - y1;
+
+      //Update dots position
+      this.dots.forEach((dot) => {
+        dot.x = dot.x - oldX + this.x;
+        dot.y = dot.y - oldY + this.y;
+      });
     };
   }
 
@@ -240,13 +256,24 @@ function createShootingGame(gameConfig, enableSound) {
         })
         .appendTo(document.body);
 
-      $score = $("<div>")
+      $header = $("<div>")
         .css({
-          textAlign: "center",
           paddingBottom: "10px",
         })
-        .html("Score: 0")
         .appendTo($gameContainer);
+
+      $score = $("<div>")
+        .css({
+          float: "left",
+        })
+        .html("Score: 0")
+        .appendTo($header);
+
+      $timer = $("<div>")
+        .css({
+          float: "right",
+        })
+        .appendTo($header);
 
       var $canvas = $("<canvas>")
         .css({
@@ -277,11 +304,17 @@ function createShootingGame(gameConfig, enableSound) {
             height: canvasWidth + "px",
             width: canvasWidth + "px",
           });
+          $header.css({
+            width: canvasWidth + "px",
+          });
         } else {
           $gameContainer.css({ padding: 0 });
           canvas.width = 420 * ratio;
           canvas.height = 420 * ratio;
           $canvas.css({ height: "420px", width: "420px" });
+          $header.css({
+            width: "420px",
+          });
         }
         ctx.scale(ratio, ratio);
       }
@@ -464,7 +497,7 @@ function createShootingGame(gameConfig, enableSound) {
     },
     nextLevel: function () {
       if (level >= 13) {
-        gameover(score);
+        shootingGame.completeGame();
         return;
       }
       aims = [];
@@ -500,6 +533,11 @@ function createShootingGame(gameConfig, enableSound) {
       }
 
       function onMouseDown() {
+        if (firstHit) {
+          shootingGame.initTimer();
+          firstHit = false;
+        }
+
         //Add Black dot
         var dot = new Dot();
         dot.x = mouse.x;
@@ -510,28 +548,50 @@ function createShootingGame(gameConfig, enableSound) {
         for (var i = 0; i < aims.length; i++) {
           if (aims[i].hitTest(mouse)) {
             hitTarget = true;
-            aims[i].contact(mouse, dot);
             dot.fadeOut = true;
+            aims[i].contact(mouse, dot);
           }
         }
 
         if (hitTarget) {
-          enableSound && correctSound.play();
+          correctSound.currentTime = 0;
+          if (enableSound) {
+            //Catch is a fix for touch devices.
+            correctSound
+              .play()
+              .then()
+              .catch((err) => {
+                setTimeout(() => {
+                  correctSound.play();
+                }, 100);
+              });
+          }
         } else {
-          enableSound && inCorrectSound.play();
+          inCorrectSound.currentTime = 0;
+          if (enableSound) {
+            //Catch is a fix for touch devices.
+            inCorrectSound
+              .play()
+              .then()
+              .catch((err) => {
+                setTimeout(() => {
+                  inCorrectSound.play();
+                }, 100);
+              });
+          }
         }
       }
 
       //For Mouse enabled device
-      canvas.addEventListener("mousedown", function (e) {
+      $(canvas).on("mousedown", function (e) {
         updateMouseXY(e);
         onMouseDown();
       });
 
       //For Mobile.
-      canvas.addEventListener("touchstart", function (e) {
-        e.preventDefault();
-        updateMouseXY(e.touches[0]);
+      $(canvas).on("touchstart", function (e) {
+        e.originalEvent.preventDefault();
+        updateMouseXY(e.originalEvent.touches[0]);
         onMouseDown();
       });
 
@@ -543,6 +603,15 @@ function createShootingGame(gameConfig, enableSound) {
         updateOffset();
       });
     },
+    removeEventListeners: function () {
+      $(canvas).off("mousedown");
+      $(canvas).off("touchstart");
+      $(window).off("resize");
+    },
+    completeGame: function () {
+      gameover(score);
+      shootingGame.removeEventListeners();
+    },
     checkResult: function () {
       var targets = aims.filter((aim) => !aim.hit);
 
@@ -551,10 +620,23 @@ function createShootingGame(gameConfig, enableSound) {
         shootingGame.nextLevel();
       }
     },
+    initTimer: function () {
+      intervalId = setInterval(() => {
+        //Reset timer when it reaches 0.
+        if (timer == 0) {
+          clearInterval(intervalId);
+          shootingGame.completeGame();
+          return;
+        }
+        timer--;
+        $timer.html(timer);
+      }, 1000);
+    },
     init: function () {
       shootingGame.setupHtml();
       shootingGame.bindEvents();
       shootingGame.nextLevel();
+      $timer.html(timer);
     },
   };
 
