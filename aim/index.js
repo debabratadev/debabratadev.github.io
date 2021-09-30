@@ -63,6 +63,11 @@ function createShootingGame(gameConfig, enableSound) {
     this.dots = [];
 
     this.draw = function () {
+      //If disappeared, then don't draw.
+      if (this.alpha == 0) {
+        return;
+      }
+
       if (this.fadeOut) {
         this.alpha -= fadeOutSpeed;
         if (this.alpha <= 0) {
@@ -613,7 +618,8 @@ function createShootingGame(gameConfig, enableSound) {
       shootingGame.removeEventListeners();
     },
     checkResult: function () {
-      var targets = aims.filter((aim) => !aim.hit);
+      //Find all targets that is not already disappeared.
+      var targets = aims.filter((aim) => aim.alpha !== 0);
 
       //Go to next level only when all targets were hit.
       if (targets.length === 0) {
