@@ -138,7 +138,7 @@ function createShootingGame(gameConfig, enableSound) {
         score += 5;
       } else if (distance <= 20) {
         score += 3;
-      } else if (distance <= 10) {
+      } else {
         score += 1;
       }
 
