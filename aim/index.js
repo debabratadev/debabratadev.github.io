@@ -13,11 +13,13 @@ function createShootingGame(gameConfig, enableSound) {
     timer = 60,
     firstHit = true,
     intervalId,
+    cursor,
     aims = [], // Targets for a level
     dots = [], //Black dots
+    components = [];
     score = 0,
     level = 0,
-    fadeOutSpeed = 0.005,
+    fadeOutSpeed = 0.01,
     ratio = window.devicePixelRatio, // Pixel ratio of the screen
     normalSpeed = 1, // Normal speed for moving targets
     fastSpeed = 3, // Fast speed for moving targets
@@ -26,6 +28,16 @@ function createShootingGame(gameConfig, enableSound) {
     rotateTargets = false, //Flag to rotate targets
     inCircle = false; //Flag to draw in circle
 
+  function Cursor() {
+    this.x = 0;
+    this.y = 0;
+    this.img = null;
+    this.width = 24;
+    this.height = 24;
+    this.draw = function() {
+      ctx.drawImage(this.img, this.x - this.width / 2, this.y - this.height/2, this.width, this.height);
+    }
+  }
   function Dot() {
     this.x = 0;
     this.y = 0;
@@ -285,6 +297,7 @@ function createShootingGame(gameConfig, enableSound) {
           height: "100%",
           width: "100%",
           border: "2px solid #ddd",
+          cursor: "none"
         })
         .appendTo($gameContainer);
 
@@ -297,39 +310,14 @@ function createShootingGame(gameConfig, enableSound) {
           paddingTop: "10px",
         })
         .appendTo($gameContainer);
-
-      function updateCanvasWidth() {
-        var windowWidth = $(window).width();
-        if (windowWidth <= 440) {
-          $gameContainer.css({ padding: "0 9px" });
-          var canvasWidth = windowWidth - 18;
-          canvas.width = canvasWidth * ratio;
-          canvas.height = canvasWidth * ratio;
-          $canvas.css({
-            height: canvasWidth + "px",
-            width: canvasWidth + "px",
-          });
-          $header.css({
-            width: canvasWidth + "px",
-          });
-        } else {
-          $gameContainer.css({ padding: 0 });
-          canvas.width = 420 * ratio;
-          canvas.height = 420 * ratio;
-          $canvas.css({ height: "420px", width: "420px" });
-          $header.css({
-            width: "420px",
-          });
-        }
-        ctx.scale(ratio, ratio);
-      }
-
-      $(window).on("resize", function () {
-        updateCanvasWidth();
-        shootingGame.nextLevel(--level);
+      
+      canvas.width = 420 * ratio;
+      canvas.height = 420 * ratio;
+      $canvas.css({ height: "420px", width: "420px" });
+      $header.css({
+        width: "420px",
       });
-
-      updateCanvasWidth();
+      ctx.scale(ratio, ratio);
     },
     createAim(x, y) {
       var aim = new Aim();
@@ -593,6 +581,21 @@ function createShootingGame(gameConfig, enableSound) {
         onMouseDown();
       });
 
+      $(canvas).on("mousemove", function (e) {
+        updateMouseXY(e);
+
+        //Set Custom Cursor position.
+        cursor.x = mouse.x;
+        cursor.y = mouse.y;
+      });
+
+      $(canvas).on("mouseout", function (e) {
+
+        //Disappear Cursor on mouse out.
+        cursor.x = -100;
+        cursor.y = -100;
+      });
+
       //For Mobile.
       $(canvas).on("touchstart", function (e) {
         e.originalEvent.preventDefault();
@@ -610,6 +613,8 @@ function createShootingGame(gameConfig, enableSound) {
     },
     removeEventListeners: function () {
       $(canvas).off("mousedown");
+      $(canvas).off("mousemove");
+      $(canvas).off("mouseout");
       $(canvas).off("touchstart");
       $(window).off("resize");
     },
@@ -643,6 +648,15 @@ function createShootingGame(gameConfig, enableSound) {
       shootingGame.bindEvents();
       shootingGame.nextLevel();
       $timer.html(timer);
+      cursor = new Cursor();
+
+      //Load Cursor
+      var img = new Image();
+      img.onload = function() {
+          cursor.img = img;
+          components.push(cursor);
+      }
+      img.src = 'data:image/svg+xml; charset=utf8, ' + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 491 491" xml:space="preserve"><g fill="#455a64"><path d="M245.333,0c-5.891,0-10.667,4.776-10.667,10.667v170.667c0,5.891,4.776,10.667,10.667,10.667 c5.891,0,10.667-4.776,10.667-10.667V10.667C256,4.776,251.224,0,245.333,0z"/><path d="M245.333,298.667c-5.891,0-10.667,4.776-10.667,10.667V480c0,5.891,4.776,10.667,10.667,10.667 c5.891,0,10.667-4.776,10.667-10.667V309.333C256,303.442,251.224,298.667,245.333,298.667z"/><path d="M181.333,234.667H10.667C4.776,234.667,0,239.442,0,245.333C0,251.224,4.776,256,10.667,256h170.667 c5.891,0,10.667-4.776,10.667-10.667C192,239.442,187.224,234.667,181.333,234.667z"/><path d="M480,234.667H309.333c-5.891,0-10.667,4.776-10.667,10.667c0,5.891,4.776,10.667,10.667,10.667H480 c5.891,0,10.667-4.776,10.667-10.667C490.667,239.442,485.891,234.667,480,234.667z"/><circle cx="245.3" cy="245.3" r="10.7"/></g><path d="M245.333,192c-5.891,0-10.667-4.776-10.667-10.667V10.667C234.667,4.776,239.442,0,245.333,0	C251.224,0,256,4.776,256,10.667v170.667C256,187.224,251.224,192,245.333,192z"/><path d="M245.333,490.667c-5.891,0-10.667-4.776-10.667-10.667V309.333c0-5.891,4.776-10.667,10.667-10.667	c5.891,0,10.667,4.776,10.667,10.667V480C256,485.891,251.224,490.667,245.333,490.667z"/><path d="M181.333,256H10.667C4.776,256,0,251.224,0,245.333c0-5.891,4.776-10.667,10.667-10.667h170.667	c5.891,0,10.667,4.776,10.667,10.667C192,251.224,187.224,256,181.333,256z"/><path d="M480,256H309.333c-5.891,0-10.667-4.776-10.667-10.667c0-5.891,4.776-10.667,10.667-10.667H480	c5.891,0,10.667,4.776,10.667,10.667C490.667,251.224,485.891,256,480,256z"/><circle cx="245.3" cy="245.3" r="10.7"/></svg>');
     },
   };
 
@@ -665,6 +679,11 @@ function createShootingGame(gameConfig, enableSound) {
     //Draw dots/holes.
     dots.forEach(function (dot) {
       dot.draw();
+    });
+
+    //Other components
+    components.forEach(function (component) {
+      component.draw();
     });
   })();
 }
