@@ -1,0 +1,88 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <title>Diagram 33</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, user-scalable=no" />
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <link rel="stylesheet" href="style.css?version=1" type="text/css" />
+    <style>
+        div.slider-container {
+            text-align: center;
+            padding-top: 10px;
+        }
+
+        span#zoom-text {
+            padding-right: 10px;
+        }
+
+        div.zoom_slider_div {
+            position: fixed;
+            left: 5px;
+            top: calc(50% + 20vh);
+            z-index: 9;
+            transform: rotate(-90deg);
+            transform-origin: top left;
+        }
+
+        div#zoom_label_div {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            transform: rotate(90deg);
+            transform-origin: top left;
+            top: 0;
+            left: 45vh;
+        }
+
+        div.axis-value {
+            margin-top: 5px;
+        }
+
+        div.test {
+            position: absolute;
+            bottom: 5px;
+            left: 0;
+            z-index: 56;
+        }
+    </style>
+</head>
+
+<body>
+    <nav id="sliders">
+        <div>
+            <button id="reset_btn">Reset</button>
+        </div>
+        <div class="axis-value">
+            X:&nbsp;&nbsp;<span id="xaxis"></span>&nbsp;&nbsp;&nbsp;
+            Y:&nbsp;&nbsp;<span id="yaxis"></span>&nbsp;&nbsp;&nbsp;
+            Z:&nbsp;&nbsp;<span id="zaxis"></span>&nbsp;&nbsp;&nbsp;
+        </div>
+    </nav>
+    <div class="zoom_slider_div">
+        <!-- <button id="number_left" class="arrow left"></button>
+        <button id="number_right" class="arrow right"></button> -->
+        <input id="zoom_slider_in" type="range" min=0 max=291 step=1 value=0 style="max-width: 40vh;width: 40vh;">
+        <div id="zoom_label_div">
+            <label id="zoom_label" title="Zoom in or out.">Zoom</label>
+        </div>
+        <!-- <span id="slider-value"></span> -->
+    </div>
+    <!-- <div class="test">
+        <input type="text" id="test" value="0.0003">
+    </div> -->
+    <script type="text/javascript" src="session_params.php?version=1"></script>
+    <script type="text/javascript" src="js/three.js?version=1"></script>
+    <script type="text/javascript" src="js/ManualControls.js?version=17"></script>
+    <script type="text/javascript" src="translations.js?version=1"></script>
+    <script type="text/javascript" src="tooltips.js?version=1"></script>
+
+    <script type="text/javascript" src="utils.src.js?version=17"></script>
+    <!-- <script type="text/javascript" src="utilities.src.js"></script> -->
+    <script type="text/javascript" src="diag33.src.js?version=17"></script>
+</body>
+
+</html>
