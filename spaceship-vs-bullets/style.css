@@ -1,0 +1,64 @@
+body {
+  margin: 0;
+}
+
+div.container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+}
+
+div.d7-spaceship-canvas-container {
+  width: 90%;
+  position: relative;
+}
+
+canvas.d7-spaceship-canvas.focused {
+  border: 2px solid #02f2f3;
+}
+
+div.d7-spaceship-canvas-container canvas.d7-spaceship-canvas {
+  width: 100%;
+  height: 100%;
+  background-color: #000;
+}
+
+div.d7-spaceship-instructions {
+  position: absolute;
+  width: 100%;
+  top: 32%;
+  text-align: center;
+  color: white;
+  font-size: 4vw;
+}
+
+div.d7-spaceship-restart-instructions {
+  position: absolute;
+  top: 30%;
+  width: 100%;
+  text-align: center;
+  color: white;
+  font-size: 2.5vw;
+}
+
+div.d7-spaceship-restart-instructions table {
+  text-align: left;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 6vh;
+}
+
+div.d7-spaceship-restart-instructions table .right-content{
+  padding-left: 10vw;
+}
+
+div.d7-spaceship-restart-instructions table .left-content{
+  padding-right: 10vw;
+}
+
+div.d7-spaceship-restart-instructions a {
+  text-decoration: underline;
+  cursor: pointer;
+  font-size: 2vw;;
+}
